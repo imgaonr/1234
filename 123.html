@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamster Kombat UI</title>
+    <style>
+        /* Основні стилі */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        #gameContainer, #questsSection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 350px;
+            padding: 15px;
+            background-color: #1f1f1f;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        }
+
+        #topBar {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 5px 0;
+            margin-bottom: 15px;
+        }
+
+        #profileSection {
+            display: flex;
+            align-items: center;
+        }
+
+        #buySkinButton {
+            background-color: #ff5722;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            padding: 5px 10px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        #keysSection {
+            display: flex;
+            align-items: center;
+        }
+
+        #keysIcon {
+            width: 20px;
+            height: auto;
+            margin-right: 5px;
+        }
+
+        #levelIncomeSection {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 5px 0;
+        }
+
+        #rewardsSection {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .rewardItem {
+            background-color: #323232;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #coinDisplay {
+            margin: 15px 0;
+            font-size: 24px;
+            color: #ffd700;
+        }
+
+        #hamsterWrapper {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 15px 0;
+            border: 8px solid #3a3a3a;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #303030, #4a4a4a);
+        }
+
+        #hamsterContainer {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        #hamster {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+
+        #energySection {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        #boostButton {
+            background-color: #1e88e5;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        /* Стили для нижньої панелі навігації */
+        #bottomNav {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 5px 0;
+            background-color: #333;
+            border-radius: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        .navItem {
+            flex: 1;
+            text-align: center;
+            padding: 10px 0;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Стили для секции квестов */
+        #questsSection {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 320px;
+            padding: 10px;
+            background-color: #2b2b2b;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #questContainer {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .questItem {
+            background-color: #3a3a3a;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 5px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        #backButton {
+            background-color: #ff5722;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            padding: 5px 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <!-- Верхня панель з профілем та інформацією -->
+        <div id="topBar">
+            <div id="profileSection">
+                <button id="buySkinButton">Купить скин</button>
+                <span id="username">DenchiK (CEO)</span>
+            </div>
+            <div id="keysSection">
+                <img src="https://via.placeholder.com/20" alt="Keys Icon" id="keysIcon">
+                <span id="keysCount">0</span>
+            </div>
+        </div>
+
+        <!-- Секція з рівнем та доходом -->
+        <div id="levelIncomeSection">
+            <span id="levelInfo">Grandmaster 9/11</span>
+            <div id="incomeInfo">
+                <img src="https://via.placeholder.com/20" alt="Hamster Icon">
+                <span id="incomeRate">+1.79M</span>
+            </div>
+            <img src="https://via.placeholder.com/20" alt="Settings Icon" id="settingsIcon">
+        </div>
+
+        <!-- Секція з щоденними нагородами -->
+        <div id="rewardsSection">
+            <div class="rewardItem">Ежедневная награда</div>
+            <div class="rewardItem">Ежедневный шифр</div>
+            <div class="rewardItem">Комбо</div>
+            <div class="rewardItem">Мини-игра</div>
+        </div>
+
+        <!-- Лічильник монет -->
+        <div id="coinDisplay">
+            <span id="coinCount">65 063 042</span>
+        </div>
+
+        <!-- Контейнер для зображення хом'яка -->
+        <div id="hamsterWrapper">
+            <div id="hamsterContainer">
+                <img src="https://via.placeholder.com/140" alt="Hamster" id="hamster">
+            </div>
+        </div>
+
+        <!-- Секція енергії та прискорення -->
+        <div id="energySection">
+            <span id="energyText">7131 / 7500</span>
+            <button id="boostButton">Ускорить</button>
+        </div>
+    </div>
+
+    <!-- Панель навігації -->
+    <div id="bottomNav">
+        <div class="navItem" id="mainButton">Главная</div>
+        <div class="navItem" id="quistButton">Quist</div>
+    </div>
+
+    <!-- Секція квестів -->
+    <div id="questsSection">
+        <button id="backButton">Назад</button>
+        <div id="questContainer">
+            <div class="questItem">
+                <h2>Квест 1</h2>
+                <p>Описание квеста 1. Выполните это задание, чтобы получить награду.</p>
+            </div>
+            <div class="questItem">
+                <h2>Квест 2</h2>
+                <p>Описание квеста 2. Соберите необходимые предметы для выполнения этого задания.</p>
+            </div>
+            <div class="questItem">
+                <h2>Квест 3</h2>
+                <p>Описание квеста 3. Победите врагов в этой битве, чтобы пройти квест.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let coins = localStorage.getItem('coins') ? parseInt(localStorage.getItem('coins')) : 65063042;
+        let energy = localStorage.getItem('energy') ? parseInt(localStorage.getItem('energy')) : 7131;
+        const maxEnergy = 7500;
+        const energyRestoreRate = 1;
+        const energyRestoreInterval = 1000;
+
+        const coinCountElement = document.getElementById('coinCount');
+        const energyTextElement = document.getElementById('energyText');
+        const boostButtonElement = document.getElementById('boostButton');
+        const hamsterElement = document.getElementById('hamster');
+        const mainButtonElement = document.getElementById('mainButton');
+        const quistButtonElement = document.getElementById('quistButton');
+        const questsSectionElement = document.getElementById('questsSection');
+        const gameContainerElement = document.getElementById('gameContainer');
+        const backButtonElement = document.getElementById('backButton');
+
+        function updateUI() {
+            coinCountElement.textContent = coins;
+            energyTextElement.textContent = `${energy} / ${maxEnergy}`;
+        }
+
+        boostButtonElement.addEventListener('click', () => {
+            if (coins >= 100000) {
+                coins -= 100000;
+                energy += 500;
+                if (energy > maxEnergy) energy = maxEnergy;
+                localStorage.setItem('coins', coins);
+                localStorage.setItem('energy', energy);
+                updateUI();
+            } else {
+                alert('Недостаточно монет!');
+            }
+        });
+
+        hamsterElement.addEventListener('click', () => {
+            if (energy > 0) {
+                coins += 100;
+                energy -= 1;
+                localStorage.setItem('coins', coins);
+                localStorage.setItem('energy', energy);
+                updateUI();
+            } else {
+                alert('Недостаточно энергии!');
+            }
+        });
+
+        setInterval(() => {
+            if (energy < maxEnergy) {
+                energy += energyRestoreRate;
+                localStorage.setItem('energy', energy);
+                updateUI();
+            }
+        }, energyRestoreInterval);
+
+        quistButtonElement.addEventListener('click', () => {
+            questsSectionElement.style.display = 'flex';
+            gameContainerElement.style.display = 'none';
+        });
+
+        backButtonElement.addEventListener('click', () => {
+            questsSectionElement.style.display = 'none';
+            gameContainerElement.style.display = 'flex';
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>
